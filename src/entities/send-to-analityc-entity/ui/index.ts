@@ -1,0 +1,1 @@
+export { SendToAnalitycEntity } from './SendToAnalitycEntity';

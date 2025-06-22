@@ -1,0 +1,23 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 21.25px;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-md);
+}
+
+.root.history {    
+    background-color: rebeccapurple;
+}
+
+.value {
+    font-weight: 500;
+    font-size: 40px;
+}
+
+.label {
+    font-size: 20px;
+}

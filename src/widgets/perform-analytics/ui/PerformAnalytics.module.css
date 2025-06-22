@@ -1,0 +1,22 @@
+.root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 35px;
+}
+
+.unload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    background-color: var(--color-light-primary);
+    border-radius: var(--border-radius-lg);
+}
+
+.drag {
+    background-color: var(--color-light-secondary);
+}

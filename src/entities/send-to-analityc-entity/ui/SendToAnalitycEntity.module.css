@@ -1,0 +1,13 @@
+.root {
+    padding: 20.5px 27px;
+    background-color: var(--color-light-secondary);
+    border-radius: calc(var(--border-radius-md) + 1px);
+    align-self: center;
+    cursor: pointer;
+}
+
+.root:disabled {
+    color: var(--color-medium-dark);
+    background-color: var(--color-light-dark);
+    cursor: not-allowed;
+}

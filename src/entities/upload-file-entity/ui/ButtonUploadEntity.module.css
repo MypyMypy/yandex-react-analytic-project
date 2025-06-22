@@ -1,0 +1,56 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.controls {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+}
+
+.controls.with-remove {
+  grid-template-columns: 1fr 70px;
+}
+
+.button {
+  text-align: center;
+  padding: 15.5px 27.5px;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+}
+
+.button-remove {
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-dark);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(30deg);
+  }
+  to {
+    transform: rotate(390deg);
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+}
+
+.loading svg {
+  animation: spin 1.5s ease-in-out infinite;
+}
+
+.label {
+  text-align: center;
+}

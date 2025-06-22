@@ -1,0 +1,1 @@
+export { DeleteHistoryEntity } from './DeleteHistoryEntity';

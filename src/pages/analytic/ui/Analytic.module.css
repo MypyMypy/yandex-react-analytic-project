@@ -1,0 +1,32 @@
+.root {}
+
+.title {
+    font-size: 30px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.section {
+    flex: 1;
+}
+
+.analityc-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.analityc {
+    flex: 1;
+    align-self: normal;
+}
+
+.highlights-container {
+    height: 100%;
+}
