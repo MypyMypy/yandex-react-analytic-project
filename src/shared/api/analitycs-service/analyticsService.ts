@@ -4,7 +4,7 @@ import type { PostAggregateResponse200 } from './types';
 
 export const analyticsService = {
   getReport: ({
-    size = 0.5,
+    size = 0.1,
     withErrors,
     maxSpend,
   }: {
@@ -15,7 +15,7 @@ export const analyticsService = {
     const queryString = buildQuery({ size, withErrors, maxSpend });
     const url = '/report' + (queryString ? `?${queryString}` : '');
 
-    return apiService.get<File>(url);
+    return apiService.rawRequest(url);
   },
   postAggregate: async (
     params: { rows: number },

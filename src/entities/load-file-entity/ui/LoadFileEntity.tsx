@@ -1,71 +1,64 @@
-import classNames from 'classnames';
-import { ButtonUploadStatus } from '../model';
-import styles from './ButtonUploadEntity.module.css';
-import { IconCancel } from '@/shared/ui';
-import type { ReactNode } from 'react';
 import { IconSpinner } from '@/shared/ui/Icons/IconSpinner';
+import { ButtonLoadStatus } from '../model/ButtonLoadStatus';
+import classNames from 'classnames';
+import styles from './LoadFileEntity.module.css';
+import { IconCancel } from '@/shared/ui';
 
 interface TitleLabel {
-  title: ReactNode;
-  label: string;
+  title: React.ReactNode;
+  label: string | null;
 }
 
 const statusMap: Record<
-  ButtonUploadStatus,
+  ButtonLoadStatus,
   (filename?: string | null) => TitleLabel
 > = {
-  [ButtonUploadStatus.DEFAULT]: () => ({
-    title: 'Загрузить файл',
-    label: 'или перетащите сюда',
+  [ButtonLoadStatus.DEFAULT]: () => ({
+    title: 'Начать генерацию',
+    label: null,
   }),
-  [ButtonUploadStatus.FILE_LOADED]: (filename) => ({
-    title: filename ?? '-',
-    label: 'файл загружен!',
-  }),
-  [ButtonUploadStatus.PARSING]: () => ({
+  [ButtonLoadStatus.LOADING]: () => ({
     title: <IconSpinner />,
-    label: 'идёт парсинг файла…',
+    label: 'идёт процесс генерации',
   }),
-  [ButtonUploadStatus.READY]: (filename) => ({
-    title: filename ?? '-',
-    label: 'готово!',
+  [ButtonLoadStatus.READY]: () => ({
+    title: 'Done!',
+    label: 'файл сгенерирован!',
   }),
-  [ButtonUploadStatus.ERROR]: (filename) => ({
-    title: filename ?? '-',
+  [ButtonLoadStatus.ERROR]: () => ({
+    title: 'Ошибка',
     label: 'упс, не то…',
   }),
 };
 
-const getButtonUploadEntityTitleAndLabel = (
-  status: ButtonUploadStatus,
+const getButtonLoadEntityTitleAndLabel = (
+  status: ButtonLoadStatus,
   filename?: string | null,
 ): TitleLabel => {
   const fn = statusMap[status];
   return fn(filename);
 };
 
-interface ButtonUploadEntityProps
+interface LoadFileEntityProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {
-  status: ButtonUploadStatus;
-  filename?: string | null;
+  status: ButtonLoadStatus;
   withRemoveButton?: boolean;
   onClickButton?: React.MouseEventHandler<HTMLButtonElement>;
   onClickRemoveButton?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const ButtonUploadEntity: React.FC<ButtonUploadEntityProps> = ({
+export const LoadFileEntity: React.FC<LoadFileEntityProps> = ({
   className,
   status,
-  filename,
   withRemoveButton,
   onClickButton,
   onClickRemoveButton,
   ...props
 }) => {
-  const { title, label } = getButtonUploadEntityTitleAndLabel(status, filename);
+  const { title, label } = getButtonLoadEntityTitleAndLabel(status);
 
   return (
     <div {...props} className={classNames(styles.root, className)}>
@@ -76,9 +69,10 @@ export const ButtonUploadEntity: React.FC<ButtonUploadEntityProps> = ({
       >
         <button
           className={classNames(styles.button, {
-            [styles.loading]: status === ButtonUploadStatus.PARSING,
-            [styles.error]: status === ButtonUploadStatus.ERROR,
-            [styles.ready]: status === ButtonUploadStatus.READY,
+            [styles.default]: status === ButtonLoadStatus.DEFAULT,
+            [styles.loading]: status === ButtonLoadStatus.LOADING,
+            [styles.error]: status === ButtonLoadStatus.ERROR,
+            [styles.ready]: status === ButtonLoadStatus.READY,
           })}
           onClick={onClickButton}
         >
@@ -96,7 +90,7 @@ export const ButtonUploadEntity: React.FC<ButtonUploadEntityProps> = ({
       </div>
       <span
         className={classNames(styles.label, {
-          [styles['label-error']]: status === ButtonUploadStatus.ERROR,
+          [styles['label-error']]: status === ButtonLoadStatus.ERROR,
         })}
       >
         {label}

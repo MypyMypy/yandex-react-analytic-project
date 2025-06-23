@@ -1,2 +1,2 @@
 export * from './ui';
-export { addHistoryItem } from './api/addHistoryItem';
+export * from './api';

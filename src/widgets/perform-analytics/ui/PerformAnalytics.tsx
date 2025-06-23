@@ -5,7 +5,7 @@ import { SendToAnalityc } from '@/features/send-to-analityc/ui/SendToAnalityc';
 import { ButtonUploadStatus } from '@/entities/upload-file-entity';
 import classNames from 'classnames';
 import { addHistoryItem } from '@/entities/history-entity';
-import { getCurrentDateFormatted } from '@/shared/utils/date/getCurrentDateFormatted';
+import type { PostAggregateResponse200 } from '@/shared/api/analitycs-service';
 
 const selectCsvFileHandler = (onSelect: (file: File) => void) => {
   const inp = document.createElement('input');
@@ -26,12 +26,14 @@ interface PerformAnalyticsProps
   > {
   status: ButtonUploadStatus;
   setStatus: (status: ButtonUploadStatus) => void;
+  data?: PostAggregateResponse200 | null;
   onSendAnalytic?: (file: File) => void;
   onResetAnalytic?: () => void;
 }
 
 export const PerformAnalytics: React.FC<PerformAnalyticsProps> = ({
   status,
+  data,
   setStatus,
   className,
   onSendAnalytic,
@@ -57,37 +59,37 @@ export const PerformAnalytics: React.FC<PerformAnalyticsProps> = ({
     setStatus(ButtonUploadStatus.FILE_LOADED);
   }
 
-  function handleButtonUploadClick() {
+  const handleButtonUploadClick = () => {
     if (status !== ButtonUploadStatus.DEFAULT) return;
     selectCsvFileHandler(handleFileSelect);
-  }
+  };
 
-  function handleButtonUploadRemoveClick() {
+  const handleButtonUploadRemoveClick = () => {
     setFile(null);
     if (onResetAnalytic) {
       onResetAnalytic();
     }
-  }
+  };
 
-  function onDragOver(e: React.DragEvent) {
+  const onDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setDragActive(true);
-  }
+  };
 
-  function onDragLeave(e: React.DragEvent) {
+  const onDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     setDragActive(false);
-  }
+  };
 
-  function onDrop(e: React.DragEvent) {
+  const onDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragActive(false);
     handleFileSelect(e.dataTransfer.files[0]);
-  }
+  };
 
-  function onSendAnalyticHandler() {
+  const onSendAnalyticHandler = () => {
     if (file && onSendAnalytic) onSendAnalytic(file);
-  }
+  };
 
   useEffect(() => {
     if (status === ButtonUploadStatus.ERROR) {
@@ -97,14 +99,14 @@ export const PerformAnalytics: React.FC<PerformAnalyticsProps> = ({
         status: 'failed',
       });
     }
-    if (status === ButtonUploadStatus.READY) {
+    if (status === ButtonUploadStatus.READY && data) {
       addHistoryItem({
-        data: null,
+        data: data,
         filename: file?.name ?? '',
         status: 'success',
       });
     }
-  }, [status, file]);
+  }, [status, file, data]);
 
   return (
     <div {...props} className={classNames(styles.root, className)}>

@@ -11,7 +11,8 @@ interface HighlightsProps
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {
-  data: PostAggregateResponse200 | null;
+  data?: PostAggregateResponse200 | null;
+  isColumn?: boolean;
 }
 
 function dataItemToHighlight<K extends HighlightTypeUnion>(
@@ -21,15 +22,21 @@ function dataItemToHighlight<K extends HighlightTypeUnion>(
   return <HighlightEntity key={key} type={key} children={String(value)} />;
 }
 
-function dataToHighlights(data: PostAggregateResponse200) {
-  return Object.entries(data).map(([key, value]) =>
-    dataItemToHighlight(key as HighlightTypeUnion, String(value)),
-  );
+function dataToHighlights(data: PostAggregateResponse200, isCol = false) {
+  return Object.entries(data).map(([key, value]) => (
+    <HighlightEntity
+      className={classNames({ [styles['col-item']]: isCol })}
+      key={key}
+      type={key as HighlightTypeUnion}
+      children={String(value)}
+    />
+  ));
 }
 
 export const Highlights: React.FC<HighlightsProps> = ({
   className,
   data,
+  isColumn,
   ...props
 }) => {
   const isEmpty = data === null;
@@ -39,6 +46,7 @@ export const Highlights: React.FC<HighlightsProps> = ({
       {...props}
       className={classNames(styles.root, className, {
         [styles.empty]: isEmpty,
+        [styles.col]: isColumn,
       })}
     >
       {isEmpty ? (
@@ -48,7 +56,7 @@ export const Highlights: React.FC<HighlightsProps> = ({
         </div>
       ) : (
         <div className={classNames(styles.highlights)}>
-          {dataToHighlights(data)}
+          {data && dataToHighlights(data, isColumn)}
         </div>
       )}
     </div>

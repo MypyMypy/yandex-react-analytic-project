@@ -5,7 +5,7 @@ import { PerformAnalytics } from '@/widgets/perform-analytics';
 import { Highlights } from '@/features/highlights';
 import { usePostAggregate } from '@/features/highlights/api/useHighlightsRequest';
 
-const ROWS_PER_CHUNK = 2000;
+const ROWS_PER_CHUNK = 4000;
 
 export const Analytic: React.FC = () => {
   const { data, execute, reset, status, setStatus } = usePostAggregate();
@@ -36,6 +36,7 @@ export const Analytic: React.FC = () => {
         </p>
         <PerformAnalytics
           status={status}
+          data={data[data.length - 1] ?? null}
           setStatus={setStatus}
           onSendAnalytic={postAggregateHandler}
           onResetAnalytic={reset}

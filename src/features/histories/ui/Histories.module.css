@@ -1,0 +1,42 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 7.5px;
+}
+
+.item {
+    display: grid;
+    grid-template-columns: 1fr 87px;
+    align-content: center;
+    gap: 40px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px
+}
+
+.genmore, .clear {
+    font-size: 35px;
+    font-weight: bold;
+    padding: 20.5px 27px;
+    border-radius: calc(var(--border-radius-md) + 1px);
+}
+
+.genmore {
+    background-color: var(--color-secondary);
+}
+
+.clear {
+    cursor: pointer;
+    color: var(--color-white);
+    background-color: var(--color-dark);
+}

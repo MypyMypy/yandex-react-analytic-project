@@ -32,16 +32,14 @@ export const HistoryEntity: React.FC<HistoryEntityProps> = ({
         [styles.failed]: status === HistoryProcessStatus.FAILED,
       })}
     >
-      <div>
-        <span>{filename}</span>
-        <span>{date}</span>
-        <span className={classNames(styles['success-col'], className)}>
-          <IconSmile />
-        </span>
-        <span className={classNames(styles['failed-col'], className)}>
-          <IconSmileSad />
-        </span>
-      </div>
+      <span>{filename}</span>
+      <span>{date}</span>
+      <span className={classNames(styles['success-col'], className)}>
+        Обработан успешно <IconSmile />
+      </span>
+      <span className={classNames(styles['failed-col'], className)}>
+        Не удалось обработать <IconSmileSad />
+      </span>
     </div>
   );
 };

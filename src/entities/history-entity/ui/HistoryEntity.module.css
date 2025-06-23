@@ -1,19 +1,31 @@
 .root {
-    display: grid;
-    grid-template-rows: repeat(4, 1fr);
-    gap: 50px;
-    justify-content: space-between;
-    padding: 16px 20px;
-    background-color: var(--color-primary);
-    border-radius: var(--border-radius-lg);
-    font-size: 30px;
-    line-height: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  align-items: center;
+  padding: 26px 30px;
+  background-color: var(--color-primary);
+  border-radius: var(--border-radius-lg);
+  font-size: 30px;
+  line-height: 100%;
 }
 
-.root.failed .failed-col {
-    color: var(--color-dark-primary);
+.success-col,
+.failed-col {
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }
 
-.root.success .success-col {
-    color: var(--color-dark-primary);
+.root.failed .success-col,
+.root.success .failed-col,
+.root.failed .success-col path,
+.root.success .failed-col path {
+  color: var(--color-dark-primary);
+  fill: var(--color-dark-primary);
+}
+
+.root.failed .failed-col path,
+.root.success .success-col path {
+  fill: var(--color-dark);
 }

@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   type PostAggregateResponse200,
   analyticsService,
 } from '@/shared/api/analitycs-service';
-import { HistoryService } from '@/shared/api/history-service';
 import { ButtonUploadStatus } from '@/entities/upload-file-entity';
 
 interface UsePostAggregateResult {

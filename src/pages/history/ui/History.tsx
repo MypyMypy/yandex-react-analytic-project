@@ -1,24 +1,48 @@
-import { BaseLayoutWithHeader, Section } from '@/shared/ui';
+import { BaseLayoutWithHeader, Modal, Section } from '@/shared/ui';
 import { Header } from '@/widgets/header';
 import styles from './History.module.css';
-import { Histories, getHistoryItems } from '@/features/histories';
-import { useEffect, useState } from 'react';
+import { Histories } from '@/features/histories';
 import type { HistoryAnalitycItem } from '@/shared/api/history-service';
+import { useState } from 'react';
+import { Highlights } from '@/features/highlights';
 
 export const History: React.FC = () => {
-  const [items, setItems] = useState<HistoryAnalitycItem[] | null>(null);
+  const [selectedItem, setSelectedItem] = useState<HistoryAnalitycItem | null>(
+    null,
+  );
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const items = getHistoryItems();
-    setItems(items ?? null);
-    console.log(items);
-  }, []);
+  const openModalHandler = (
+    id: string | number,
+    items: HistoryAnalitycItem[] | null,
+  ) => {
+    if (items?.length) {
+      const item = items.find((item) => item.id === String(id));
+      if (item) {
+        setIsOpen(true);
+        setSelectedItem(item);
+      }
+    }
+  };
+
+  const closeModalHandler = () => {
+    setSelectedItem(null);
+    setIsOpen(false);
+  };
 
   return (
     <BaseLayoutWithHeader className={styles.root} header={<Header />}>
       <Section>
-        <Histories items={items} />
+        <Histories onClickHistoryItem={openModalHandler} />
       </Section>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          closeModalHandler();
+        }}
+      >
+        <Highlights isColumn={true} data={selectedItem?.data} />
+      </Modal>
     </BaseLayoutWithHeader>
   );
 };
